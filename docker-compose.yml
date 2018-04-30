@@ -30,7 +30,7 @@ services:
       - "./nginx/logs/php-fpm:/usr/local/var/log/php7"
       - "./nginx/socket:/var/run"
     links:
-      - mariadb
+      - mysql
       - redis
     #https://github.com/laradock/laradock/issues/435
     extra_hosts:
@@ -55,7 +55,7 @@ services:
     volumes_from:
        - www
     links:
-      - mariadb
+      - mysql
       - redis
     extra_hosts:
       - "${SUPERVISOR_DOMAIN}:${NGINX_WEB_SERVER_IP}"
@@ -94,16 +94,16 @@ services:
 
   ### MariaDB Container #######################################
   # MariaDB - One of the most popular database servers. Made by the original developers of MySQL. Guaranteed to stay open source.
-  mariadb:
-    image: mariadb:10.2
-    container_name: lnmp-mariadb
+  mysql:
+    image: mysql:5.7
+    container_name: lnmp-mysql
     ports:
       - "3306:3306"
     volumes:
       # NOTE: your data will be stored in ./mysql
-      - ./mariadb/data/mysql:/var/lib/mysql
+      - ./mysql/data:/var/lib/mysql
     environment:
-      - MYSQL_DATABASE=mysql
+      - MYSQL_DATABASE=tv
       - MYSQL_USER=developer
       - MYSQL_PASSWORD=developer
       - MYSQL_ROOT_PASSWORD=developer
